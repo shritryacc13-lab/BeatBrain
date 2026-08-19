@@ -4,9 +4,12 @@ import streamlit as st
 import torch
 import numpy as np
 import librosa
+import librosa.display  
 import os
 import tempfile
 import time  # <--- Added this to handle the delay
+import matplotlib
+matplotlib.use("Agg")         
 import matplotlib.pyplot as plt
 import seaborn as sns
 from model_2 import HMSANet
