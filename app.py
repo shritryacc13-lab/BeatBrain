@@ -1,18 +1,19 @@
 
 
+from model_2 import HMSANet
+import seaborn as sns
+import matplotlib.pyplot as plt
 import streamlit as st
 import torch
 import numpy as np
 import librosa
-import librosa.display  
+import librosa.display
 import os
+import io
 import tempfile
 import time  # <--- Added this to handle the delay
 import matplotlib
-matplotlib.use("Agg")         
-import matplotlib.pyplot as plt
-import seaborn as sns
-from model_2 import HMSANet
+matplotlib.use("Agg")
 
 # --- PAGE CONFIGURATION ---
 st.set_page_config(
@@ -142,7 +143,12 @@ if uploaded_file is not None:
                 ax.set_ylabel("Probability (%)")
                 ax.set_ylim(0, 100)
                 plt.xticks(rotation=45)
-                st.pyplot(fig)
+
+                buf = io.BytesIO()
+                fig.savefig(buf, format="png", bbox_inches="tight")
+                buf.seek(0)
+                st.image(buf)
+                plt.close(fig)
 
                 # Show Spectrogram
                 st.subheader("Visual Analysis (Spectrogram)")
@@ -150,7 +156,12 @@ if uploaded_file is not None:
                 librosa.display.specshow(
                     spectrogram, x_axis='time', y_axis='mel', sr=SAMPLE_RATE, ax=ax_spec)
                 plt.colorbar(ax_spec.collections[0], format='%+2.0f dB')
-                st.pyplot(fig_spec)
+
+                buf2 = io.BytesIO()
+                fig_spec.savefig(buf2, format="png", bbox_inches="tight")
+                buf2.seek(0)
+                st.image(buf2)
+                plt.close(fig_spec)
 
             except Exception as e:
                 st.error(f"Error analyzing audio: {e}")
