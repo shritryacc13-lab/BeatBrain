@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.Python
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# Project-specific
+archive/
+test_audio/
+predictions_*.csv
+tempCodeRunnerFile.py
+check_count.py
+
+processed_data/X.npy
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
